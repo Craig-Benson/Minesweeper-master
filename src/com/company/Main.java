@@ -1,8 +1,8 @@
 package com.company;
 
 import java.lang.reflect.Array;
-import java.sql.SQLOutput;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
+       // HashMap<Integer,Integer> coordinates = new HashMap<>();
 //        int row =5;
 //        int column =7;
 //        int bomb =7;
@@ -24,8 +24,9 @@ public class Main {
         int marker = bomb;
 
         int[][] minefield = new int[row+2][column+2];
-
-        minefield = placeMines(row,column,bomb,minefield);
+int[][] coordinates = new int[bomb][2];
+        int n=0;
+        minefield = placeMines(n,row,column,bomb,minefield,coordinates);
 
         for(int i=1;i<=row;i++){
             System.out.println();
@@ -39,7 +40,7 @@ public class Main {
 
     }
 
-    public static int[][] placeMines(int row, int column, int bomb, int[][] field){
+    public static int[][] placeMines(int n,int row, int column, int bomb, int[][] field, int[][] coordinates){
 
 
         Random rnd = new Random();
@@ -54,11 +55,14 @@ public class Main {
 
             //already a bomb
             if (field[randomRow][randomColumn] == -1){
-                return placeMines(row, column, bomb, field);
+                return placeMines(n,row, column, bomb, field,coordinates);
 
             }else if(!(field[randomRow][randomColumn] == -1)){
 
                 field[randomRow][randomColumn] = -1;
+//add to array
+
+
 
                 if(!(field[randomRow-1][randomColumn]==-1)){field[randomRow-1][randomColumn]+=1;}
                 if(!(field[randomRow-1][randomColumn+1]==-1)){field[randomRow-1][randomColumn+1]+=1;}
@@ -77,7 +81,7 @@ public class Main {
 
         }
 
-        return placeMines(row, column, (bomb-1), field);
+        return placeMines(n,row, column, (bomb-1), field,coordinates);
     }
 
 public static int checkBomb(int row,int column,int marker,int[][] field){
@@ -102,20 +106,19 @@ public static int checkBomb(int row,int column,int marker,int[][] field){
     }else if(YorN.equals("y")&&field[rowChoice][columnChoice]==-1) {
 
         marker -= 1;
-        if (marker<=0){
-            System.out.println("no markers left, check if you are correct?");
+        //add correct choice to array
 
-            correct += 1;
     }else{
 
             System.out.println(field[rowChoice][columnChoice]);
             checkBomb(row, column,marker, field);
         }
-    }
+    return correct;
+}
 
-    return field[rowChoice][columnChoice];
+
 
 }
 
-}
+
 
