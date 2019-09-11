@@ -36,7 +36,7 @@ public class Main {
             }
         }
 
-        checkBomb(n,row,column,bomb,marker,minefield,bombCoordinates,choiceCoordinates);
+        checkBomb(row,column,bomb,marker,minefield,bombCoordinates,choiceCoordinates);
 
     }
 
@@ -94,7 +94,7 @@ int i = 0;
         return placeMines(n,row, column, (bomb-1), field,bombCoordinates);
     }
 
-public static int[][] checkBomb(int n, int row, int column, int bomb, int marker, int[][] field, int [][] bombCoordinates, int[][] choiceCoordinates){
+public static int[][] checkBomb( int row, int column, int bomb, int marker, int[][] field, int [][] bombCoordinates, int[][] choiceCoordinates){
 
     int correct=0;
 
@@ -114,21 +114,25 @@ public static int[][] checkBomb(int n, int row, int column, int bomb, int marker
     if(YorN.equals("n")&&field[rowChoice][columnChoice]==-1){
         System.out.println("Boom!");
         System.exit(-1);
-    }else if(YorN.equals("y")&&field[rowChoice][columnChoice]==-1) {//change so you can pick a wrong index
+    }else if(YorN.equals("y")) {//change so you can pick a wrong index
+
+
+
+
             compaireCoordinates();//rename
 
 
 
     }else{
             System.out.println(field[rowChoice][columnChoice]);
-            checkBomb(n,row, column,bomb,marker, field,bombCoordinates,choiceCoordinates);
+            checkBomb(row, column,bomb,marker, field,bombCoordinates,choiceCoordinates);
         }
     return choiceCoordinates;
 }
 
 public static int [][] compairCoordinates(int marker,int[][] choiceCoordinates,int rowChoice, int row, int columnChoice){
 
-    marker -= 1;
+    marker -=1;
     //add correct choice to array
     if(marker==0){
         for(int i=0;i<choiceCoordinates.length;i++){
