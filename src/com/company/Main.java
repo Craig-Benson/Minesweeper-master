@@ -27,28 +27,40 @@ public class Main {
         int n = 0;
         minefield = placeMines(n, row, column, bomb, minefield, bombCoordinates);
 
+
+        //for testing prints minefield
         for (int i = 1; i <= row; i++) {
             System.out.println();
             for (int j = 1; j <= column; j++) {
-                System.out.print(minefield[i][j] + " ");
+                System.out.print(minefield[i][j]+" ");
 
             }
+
         }
+
+        //prints minefield x
+        for (int i = 1; i <= row; i++) {
+            System.out.println();
+            for (int j = 1; j <= column; j++) {
+                System.out.print("x"+" ");
+
+            }
+
+        }
+
 
         checkBomb(n,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates);
 
        for (int j=0;j<bombCoordinates.length;j++){
            for(int k=0;k<bombCoordinates.length;k++){
-int a =0;
-int b=1;
+            int a =0;
+            int b=1;
+
                if(Arrays.equals(bombCoordinates[j],choiceCoordinates[j])||Arrays.equals(bombCoordinates[j],choiceCoordinates[k])){
                    win +=1;
                    break;
                }
-
-
            }
-
        }
         if(win ==bomb){
             System.out.println("win");
@@ -83,10 +95,6 @@ int b=1;
                 bombCoordinates[n][j] = randomColumn;
 
                 n += 1;
-
-
-                //add to array
-
 
                 if (!(field[randomRow - 1][randomColumn] == -1)) {
                     field[randomRow - 1][randomColumn] += 1;
@@ -129,11 +137,40 @@ int b=1;
 
 
         Scanner scanner = new Scanner(System.in);
-
+        System.out.println();
         System.out.println("Enter row between 1 and " + row);
         int rowChoice = scanner.nextInt();
         System.out.println("Enter column between 1 and " + row);
         int columnChoice = scanner.nextInt();
+        
+        //printing map after pick ---------------------------------------------------------
+
+        if (!(field[rowChoice - 1][columnChoice] == -1)) {
+            System.out.println(field[rowChoice - 1][columnChoice]);
+        }
+        if (!(field[row - 1][column + 1] == -1)) {
+            field[row - 1][column + 1] += 1;
+        }
+        if (!(field[row - 1][column - 1] == -1)) {
+            field[row - 1][column - 1] += 1;
+        }
+
+        if (!(field[row][column + 1] == -1)) {
+            field[row][column + 1] += 1;
+        }
+        if (!(field[row][column - 1] == -1)) {
+            field[row][column - 1] += 1;
+        }
+
+        if (!(field[row + 1][column] == -1)) {
+            field[row + 1][column] += 1;
+        }
+        if (!(field[row + 1][column + 1] == -1)) {
+            field[row + 1][column + 1] += 1;
+        }
+        if (!(field[row + 1][column - 1] == -1)) {
+            field[row + 1][column - 1] += 1;
+        }
 
         System.out.println("Would you like to put a marker down?");
         scanner.nextLine();
@@ -145,7 +182,6 @@ int b=1;
             System.out.println("Boom!");
             System.exit(-1);
         } else if (YorN.equals("y")||YorN.equals("n") && field[rowChoice][columnChoice] != -1) {
-
 
             compareCoordinates(n, row,  column,  bomb, marker,field, bombCoordinates,choiceCoordinates,  rowChoice,  columnChoice);//rename
 
@@ -161,9 +197,6 @@ int b=1;
 
 
         marker -= 1;
-
-
-
 
                     int a = 0;
                     int b = 1;
