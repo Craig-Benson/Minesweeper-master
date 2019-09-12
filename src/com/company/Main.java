@@ -28,17 +28,21 @@ public class Main {
         minefield = placeMines(n, row, column, bomb, minefield, bombCoordinates);
 
 
-        //for testing prints minefield
+        //for testing prints minefield with x for mines
         for (int i = 1; i <= row; i++) {
             System.out.println();
             for (int j = 1; j <= column; j++) {
-                System.out.print(minefield[i][j]+" ");
-
+                if(minefield[i][j]!=-1) {
+                    System.out.print(minefield[i][j] + " ");
+                }else{
+                    System.out.print("x" + " ");
+            }
             }
 
         }
 
         //prints minefield x
+        System.out.println();
         for (int i = 1; i <= row; i++) {
             System.out.println();
             for (int j = 1; j <= column; j++) {
@@ -53,8 +57,6 @@ public class Main {
 
        for (int j=0;j<bombCoordinates.length;j++){
            for(int k=0;k<bombCoordinates.length;k++){
-            int a =0;
-            int b=1;
 
                if(Arrays.equals(bombCoordinates[j],choiceCoordinates[j])||Arrays.equals(bombCoordinates[j],choiceCoordinates[k])){
                    win +=1;
@@ -122,17 +124,13 @@ public class Main {
                 if (!(field[randomRow + 1][randomColumn - 1] == -1)) {
                     field[randomRow + 1][randomColumn - 1] += 1;
                 }
-
-
             }
-
-
         }
 
         return placeMines(n, row, column, (bomb - 1), field, bombCoordinates);
     }
 
-    public static int[][] checkBomb(int n,int row, int column, int bomb, int marker, int[][] field, int[][] bombCoordinates, int[][] choiceCoordinates) {
+    public static int[][] checkBomb(int n,int row, int column, int bomb, int marker, int[][] minefield, int[][] bombCoordinates, int[][] choiceCoordinates) {
 
 
 
@@ -142,35 +140,52 @@ public class Main {
         int rowChoice = scanner.nextInt();
         System.out.println("Enter column between 1 and " + row);
         int columnChoice = scanner.nextInt();
-        
-        //printing map after pick ---------------------------------------------------------
 
-        if (!(field[rowChoice - 1][columnChoice] == -1)) {
-            System.out.println(field[rowChoice - 1][columnChoice]);
+        //if row and column != -1 add them to an array, print the array anything not in the array print x, else boom--------------------------------------------------------------------------------------
+
+        if (!(minefield[rowChoice - 1][columnChoice - 1] == -1)) {
+            System.out.print(minefield[rowChoice - 1][columnChoice - 1] + " ");
+        }else{
+            System.out.print("x" + " ");
         }
-        if (!(field[row - 1][column + 1] == -1)) {
-            field[row - 1][column + 1] += 1;
+        if (!(minefield[rowChoice - 1][columnChoice] == -1)) {
+            System.out.print(minefield[rowChoice-1][columnChoice] + " ");
+        }else{
+            System.out.print("x" + " ");
         }
-        if (!(field[row - 1][column - 1] == -1)) {
-            field[row - 1][column - 1] += 1;
+        if (!(minefield[rowChoice - 1][columnChoice + 1] == -1)) {
+            System.out.print(minefield[rowChoice - 1][columnChoice + 1] + " ");
+        }else{
+            System.out.print("x" + " ");
         }
 
-        if (!(field[row][column + 1] == -1)) {
-            field[row][column + 1] += 1;
+        if (!(minefield[rowChoice][columnChoice + 1] == -1)) {
+            System.out.print(minefield[rowChoice][columnChoice + 1] + " ");
+        }else{
+            System.out.print("x" + " ");
         }
-        if (!(field[row][column - 1] == -1)) {
-            field[row][column - 1] += 1;
+        if (!(minefield[rowChoice][columnChoice - 1] == -1)) {
+            System.out.print(minefield[rowChoice][columnChoice - 1] + " ");
+        }else{
+            System.out.print("x" + " ");
         }
 
-        if (!(field[row + 1][column] == -1)) {
-            field[row + 1][column] += 1;
+        if (!(minefield[rowChoice + 1][columnChoice] == -1)) {
+            System.out.print(minefield[rowChoice + 1][columnChoice] + " ");
+        }else{
+            System.out.print("x" + " ");
         }
-        if (!(field[row + 1][column + 1] == -1)) {
-            field[row + 1][column + 1] += 1;
+        if (!(minefield[rowChoice + 1][columnChoice + 1] == -1)) {
+            System.out.print(minefield[rowChoice + 1][columnChoice + 1] + " ");
+        }else{
+            System.out.print("x" + " ");
         }
-        if (!(field[row + 1][column - 1] == -1)) {
-            field[row + 1][column - 1] += 1;
+        if (!(minefield[rowChoice + 1][columnChoice - 1] == -1)) {
+            System.out.print(minefield[rowChoice + 1][columnChoice - 1] + " ");
+        }else{
+            System.out.print("x" + " ");
         }
+
 
         System.out.println("Would you like to put a marker down?");
         scanner.nextLine();
@@ -178,22 +193,22 @@ public class Main {
         String YorN = scanner.nextLine().toLowerCase();
 
 
-        if (YorN.equals("n") && field[rowChoice][columnChoice] == -1) {
+        if (YorN.equals("n") && minefield[rowChoice][columnChoice] == -1) {
             System.out.println("Boom!");
             System.exit(-1);
-        } else if (YorN.equals("y")||YorN.equals("n") && field[rowChoice][columnChoice] != -1) {
+        } else if (YorN.equals("y")||YorN.equals("n") && minefield[rowChoice][columnChoice] != -1) {
 
-            compareCoordinates(n, row,  column,  bomb, marker,field, bombCoordinates,choiceCoordinates,  rowChoice,  columnChoice);//rename
+            compareCoordinates(n, row,  column,  bomb, marker,minefield, bombCoordinates,choiceCoordinates,  rowChoice,  columnChoice);//rename
 
 
         } else {
-            System.out.println(field[rowChoice][columnChoice]);
-            checkBomb(n,row, column, bomb, marker, field, bombCoordinates, choiceCoordinates);
+            System.out.println(minefield[rowChoice][columnChoice]);
+            checkBomb(n,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates);
         }
         return choiceCoordinates;
     }
 
-    public static int[][] compareCoordinates(int n,int row, int column, int bomb,int marker,int[][] field, int[][] bombCoordinates, int[][] choiceCoordinates, int rowChoice, int columnChoice) {
+    public static int[][] compareCoordinates(int n,int row, int column, int bomb,int marker,int[][] minefield, int[][] bombCoordinates, int[][] choiceCoordinates, int rowChoice, int columnChoice) {
 
 
         marker -= 1;
@@ -205,7 +220,7 @@ public class Main {
                     n += 1;
 
             if(marker>0) {
-                checkBomb(n,row, column, bomb, marker, field, bombCoordinates, choiceCoordinates);
+                checkBomb(n,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates);
             }
 
         return choiceCoordinates;
