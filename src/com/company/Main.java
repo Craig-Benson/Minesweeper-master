@@ -132,7 +132,7 @@ public class Main {
 
     public static int[][] checkBomb(int n,int row, int column, int bomb, int marker, int[][] minefield, int[][] bombCoordinates, int[][] choiceCoordinates) {
 
-
+int [][] printArray = new int[3][3];
 
         Scanner scanner = new Scanner(System.in);
         System.out.println();
@@ -142,49 +142,52 @@ public class Main {
         int columnChoice = scanner.nextInt();
 
         //if row and column != -1 add them to an array, print the array anything not in the array print x, else boom--------------------------------------------------------------------------------------
+        int i =0;
 
-        if (!(minefield[rowChoice - 1][columnChoice - 1] == -1)) {
-            System.out.print(minefield[rowChoice - 1][columnChoice - 1] + " ");
-        }else{
-            System.out.print("x" + " ");
-        }
-        if (!(minefield[rowChoice - 1][columnChoice] == -1)) {
-            System.out.print(minefield[rowChoice-1][columnChoice] + " ");
-        }else{
-            System.out.print("x" + " ");
-        }
-        if (!(minefield[rowChoice - 1][columnChoice + 1] == -1)) {
-            System.out.print(minefield[rowChoice - 1][columnChoice + 1] + " ");
-        }else{
-            System.out.print("x" + " ");
+            printArray[n][i] = minefield[rowChoice - 1][columnChoice - 1];
+            i+=1;
+            printArray[n][i] =minefield[rowChoice-1][columnChoice];
+            i+=1;
+            printArray[n][i] =minefield[rowChoice - 1][columnChoice + 1];
+            i=0;
+            n+=1;
+            printArray[n][i] =minefield[rowChoice][columnChoice + 1];
+            i+=1;
+            printArray[n][i] =minefield[rowChoice][columnChoice];
+            i+=1;
+            printArray[n][i] =minefield[rowChoice][columnChoice - 1];
+            i=0;
+            n+=1;
+            printArray[n][i] =minefield[rowChoice + 1][columnChoice];
+            i+=1;
+            printArray[n][i] =minefield[rowChoice + 1][columnChoice + 1];
+            i+=1;
+            printArray[n][i] =minefield[rowChoice + 1][columnChoice - 1];
+            i=0;
+
+
+
+
+        for (int j = 0; j <= printArray.length-1; j++) {
+            System.out.println();
+            for(int j1 = 1; j1<= row;j1++){
+            for (int k = 0; k <= printArray.length-1; k++) {
+                if (printArray[j][k] != -1) {
+                    System.out.print(printArray[j][k] + " ");
+                } else {
+                    System.out.print("x" + " ");
+                }
+                j1++;
+            }
+                System.out.print("x" + " ");
+
+//
+
+            }
+
         }
 
-        if (!(minefield[rowChoice][columnChoice + 1] == -1)) {
-            System.out.print(minefield[rowChoice][columnChoice + 1] + " ");
-        }else{
-            System.out.print("x" + " ");
-        }
-        if (!(minefield[rowChoice][columnChoice - 1] == -1)) {
-            System.out.print(minefield[rowChoice][columnChoice - 1] + " ");
-        }else{
-            System.out.print("x" + " ");
-        }
 
-        if (!(minefield[rowChoice + 1][columnChoice] == -1)) {
-            System.out.print(minefield[rowChoice + 1][columnChoice] + " ");
-        }else{
-            System.out.print("x" + " ");
-        }
-        if (!(minefield[rowChoice + 1][columnChoice + 1] == -1)) {
-            System.out.print(minefield[rowChoice + 1][columnChoice + 1] + " ");
-        }else{
-            System.out.print("x" + " ");
-        }
-        if (!(minefield[rowChoice + 1][columnChoice - 1] == -1)) {
-            System.out.print(minefield[rowChoice + 1][columnChoice - 1] + " ");
-        }else{
-            System.out.print("x" + " ");
-        }
 
 
         System.out.println("Would you like to put a marker down?");
