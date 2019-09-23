@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -27,29 +26,33 @@ public class Main {
 
         minefield = placeMines(n, row, column, bomb, minefield, bombCoordinates);
 
-        //for testing prints minefield with x for mines
-        for (int i = 1; i <= row; i++) {
-            System.out.println();
-            for (int j = 1; j <= column; j++) {
-                if(minefield[i][j]!=-1) {
-                    System.out.print(minefield[i][j] + " ");
-                }else{
-                    System.out.print("x" + " ");
-            }
-            }
+//        //for testing prints minefield with x for mines
+//        for (int i = 1; i <= row; i++) {
+//            System.out.println();
+//            for (int j = 1; j <= column; j++) {
+//                if(minefield[i][j]!=-1) {
+//                    System.out.print(minefield[i][j] + " ");
+//                }else{
+//                    System.out.print("x" + " ");
+//            }
+//            }
+//
+//        }
+//
+//        //prints minefield x
+//        System.out.println();
+//        for (int i = 1; i <= row; i++) {
+//            System.out.println();
+//            for (int j = 1; j <= column; j++) {
+//                System.out.print("x"+" ");
+//
+//            }
+//
+//        }
+//for testing prints minefield with x for mines
+        print(row,row, column);
 
-        }
 
-        //prints minefield x
-        System.out.println();
-        for (int i = 1; i <= row; i++) {
-            System.out.println();
-            for (int j = 1; j <= column; j++) {
-                System.out.print("x"+" ");
-
-            }
-
-        }
 
 
         checkBomb(n,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates);
@@ -144,6 +147,7 @@ int [][] printArray = new int[3][3];
         int i =0;
 
         //figure out recursion for this
+
             printArray[n][i] = minefield[rowChoice - 1][columnChoice - 1];
             i+=1;
             printArray[n][i] =minefield[rowChoice-1][columnChoice];
@@ -169,7 +173,7 @@ int [][] printArray = new int[3][3];
 
 
 
-// get the 6 around the position and print them,
+// print the 6 around the position and print them,
         for (int j = 0; j <= printArray.length-1; j++) {
 
             for (int k = 0; k <= printArray.length-1; k++) {
@@ -225,6 +229,27 @@ int [][] printArray = new int[3][3];
     }
 
 
+
+
+public static int print(int n, int row, int column){
+
+if (column ==0){
+    return 1;
+}
+        if(row == 0) {
+            System.out.println();
+            row =n;
+            return print(n,row,column-1);
+        }
+    System.out.print("x ");
+
+
+
+
+
+
+ return print(n,row-1,column);
+}
 }
 
 
