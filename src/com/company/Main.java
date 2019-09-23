@@ -9,8 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-
         System.out.println("Enter how many rows: ");
         int row = scanner.nextInt();
         System.out.println("Enter how many Columns: ");
@@ -22,11 +20,12 @@ public class Main {
         int[][] minefield = new int[row + 2][column + 2];
         int[][] bombCoordinates = new int[bomb][2];
         int[][] choiceCoordinates = new int[bomb][2];
-
-
         int n = 0;
-        minefield = placeMines(n, row, column, bomb, minefield, bombCoordinates);
 
+
+
+
+        minefield = placeMines(n, row, column, bomb, minefield, bombCoordinates);
 
         //for testing prints minefield with x for mines
         for (int i = 1; i <= row; i++) {
@@ -64,7 +63,7 @@ public class Main {
                }
            }
        }
-        if(win ==bomb){
+        if(win == bomb){
             System.out.println("win");
         }
     }
@@ -151,43 +150,36 @@ int [][] printArray = new int[3][3];
             printArray[n][i] =minefield[rowChoice - 1][columnChoice + 1];
             i=0;
             n+=1;
-            printArray[n][i] =minefield[rowChoice][columnChoice + 1];
+            printArray[n][i] =minefield[rowChoice][columnChoice - 1];
             i+=1;
             printArray[n][i] =minefield[rowChoice][columnChoice];
             i+=1;
-            printArray[n][i] =minefield[rowChoice][columnChoice - 1];
+            printArray[n][i] =minefield[rowChoice][columnChoice + 1];
             i=0;
             n+=1;
+            printArray[n][i] =minefield[rowChoice + 1][columnChoice-1];
+            i+=1;
             printArray[n][i] =minefield[rowChoice + 1][columnChoice];
             i+=1;
-            printArray[n][i] =minefield[rowChoice + 1][columnChoice + 1];
-            i+=1;
-            printArray[n][i] =minefield[rowChoice + 1][columnChoice - 1];
+            printArray[n][i] =minefield[rowChoice + 1][columnChoice+ 1];
             i=0;
 
 
 
-
+// get the 6 around the position and print them,
         for (int j = 0; j <= printArray.length-1; j++) {
-            System.out.println();
-            for(int j1 = 1; j1<= row;j1++){
+
             for (int k = 0; k <= printArray.length-1; k++) {
                 if (printArray[j][k] != -1) {
                     System.out.print(printArray[j][k] + " ");
                 } else {
                     System.out.print("x" + " ");
                 }
-                j1++;
             }
-                System.out.print("x" + " ");
+                System.out.println();
 
-//
-
-            }
 
         }
-
-
 
 
         System.out.println("Would you like to put a marker down?");
