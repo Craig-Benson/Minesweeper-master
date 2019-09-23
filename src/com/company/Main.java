@@ -143,12 +143,14 @@ int [][] printArray = new int[3][3];
         //if row and column != -1 add them to an array, print the array anything not in the array print x, else boom--------------------------------------------------------------------------------------
         int i =0;
 
+        //figure out recursion for this
             printArray[n][i] = minefield[rowChoice - 1][columnChoice - 1];
             i+=1;
             printArray[n][i] =minefield[rowChoice-1][columnChoice];
             i+=1;
             printArray[n][i] =minefield[rowChoice - 1][columnChoice + 1];
             i=0;
+
             n+=1;
             printArray[n][i] =minefield[rowChoice][columnChoice - 1];
             i+=1;
@@ -156,6 +158,7 @@ int [][] printArray = new int[3][3];
             i+=1;
             printArray[n][i] =minefield[rowChoice][columnChoice + 1];
             i=0;
+
             n+=1;
             printArray[n][i] =minefield[rowChoice + 1][columnChoice-1];
             i+=1;
