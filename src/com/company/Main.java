@@ -50,7 +50,8 @@ public class Main {
 //
 //        }
 //for testing prints minefield with x for mines
-        print(row,row, column);
+        printX(row,row, column);
+        //printField(row,row, column, minefield);
 
 
 
@@ -231,26 +232,41 @@ int [][] printArray = new int[3][3];
 
 
 
-public static int print(int n, int row, int column){
+public static int printX(int n, int row, int column){
 
-if (column ==0){
-    return 1;
+    if (column ==0){
+        return 1;
+    }
+    if(row == 0) {
+        System.out.println();
+        row =n;
+        return printX(n,row,column-1);
+    }
+    System.out.print("x ");
+
+    return printX(n,row-1,column);
 }
+
+
+    public static int printField(int n, int row, int column, int[][] minefield){
+
+        if (column ==0){
+            return 1;
+        }
         if(row == 0) {
             System.out.println();
             row =n;
-            return print(n,row,column-1);
+            return printX(n,row,column-1);
         }
-    System.out.print("x ");
+        System.out.print("x ");
 
-
-
-
-
-
- return print(n,row-1,column);
+        return printX(n,row-1,column);
+    }
 }
-}
+
+
+
+
 
 
 
