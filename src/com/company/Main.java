@@ -7,13 +7,11 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter how many rows: ");
-        int row = scanner.nextInt();
-        System.out.println("Enter how many Columns: ");
-        int column = scanner.nextInt();
-        System.out.println("Enter how many bombs: ");
-        int bomb = scanner.nextInt();
+
+        int[] fieldSize = size();
+        int row = fieldSize[0];
+        int column = fieldSize[1];
+        int bomb = fieldSize[2];
         int marker = bomb;
         int win = 0;
         int[][] minefield = new int[row + 2][column + 2];
@@ -26,7 +24,7 @@ public class Main {
 
         minefield = placeMines(n, row, column, bomb, minefield, bombCoordinates);
 
-//        //for testing prints minefield with x for mines
+        //for testing prints minefield with x for mines
 //        for (int i = 1; i <= row; i++) {
 //            System.out.println();
 //            for (int j = 1; j <= column; j++) {
@@ -38,23 +36,11 @@ public class Main {
 //            }
 //
 //        }
-//
-//        //prints minefield x
-//        System.out.println();
-//        for (int i = 1; i <= row; i++) {
-//            System.out.println();
-//            for (int j = 1; j <= column; j++) {
-//                System.out.print("x"+" ");
-//
-//            }
-//
-//        }
+
+
 //for testing prints minefield with x for mines
         printX(row,row, column);
-        //printField(row,row, column, minefield);
-
-
-
+        printField(1,1, 1, minefield);
 
         checkBomb(n,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates);
 
@@ -70,6 +56,20 @@ public class Main {
         if(win == bomb){
             System.out.println("win");
         }
+    }
+
+    public static int[] size(){
+        int fieldSize[] = new int[3];
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter how many rows: ");
+        fieldSize[0] = scanner.nextInt();
+        System.out.println("Enter how many Columns: ");
+        fieldSize[1] = scanner.nextInt();
+        System.out.println("Enter how many bombs: ");
+        fieldSize[2] = scanner.nextInt();
+
+        return fieldSize;
+
     }
 
     public static int[][] placeMines(int n, int row, int column, int bomb, int[][] field, int[][] bombCoordinates) {
@@ -155,16 +155,16 @@ int [][] printArray = new int[3][3];
             i+=1;
             printArray[n][i] =minefield[rowChoice - 1][columnChoice + 1];
             i=0;
-
             n+=1;
+
             printArray[n][i] =minefield[rowChoice][columnChoice - 1];
             i+=1;
             printArray[n][i] =minefield[rowChoice][columnChoice];
             i+=1;
             printArray[n][i] =minefield[rowChoice][columnChoice + 1];
             i=0;
-
             n+=1;
+
             printArray[n][i] =minefield[rowChoice + 1][columnChoice-1];
             i+=1;
             printArray[n][i] =minefield[rowChoice + 1][columnChoice];
@@ -175,6 +175,23 @@ int [][] printArray = new int[3][3];
 
 
 // print the 6 around the position and print them,
+        //if bomb picked boom
+//        if(minefield[rowChoice][columnChoice]==-1){
+//            System.out.println("Boom!");
+//            System.out.println("Restart? Y or N");
+//            scanner.nextLine();
+//            String YorN =scanner.nextLine().toLowerCase();
+//
+//            if(YorN.equals("y")){
+//                //figure out how to restart
+//            size();
+//            }else{
+//                System.exit(0);
+//            }
+//
+//        }
+
+
         for (int j = 0; j <= printArray.length-1; j++) {
 
             for (int k = 0; k <= printArray.length-1; k++) {
@@ -235,6 +252,7 @@ int [][] printArray = new int[3][3];
 public static int printX(int n, int row, int column){
 
     if (column ==0){
+        System.out.println();
         return 1;
     }
     if(row == 0) {
@@ -244,23 +262,28 @@ public static int printX(int n, int row, int column){
     }
     System.out.print("x ");
 
+
     return printX(n,row-1,column);
 }
 
 
     public static int printField(int n, int row, int column, int[][] minefield){
 
-        if (column ==0){
+        if (row ==6){
             return 1;
         }
-        if(row == 0) {
+        if(column == 6) {
             System.out.println();
-            row =n;
-            return printX(n,row,column-1);
+            column =n;
+            return printField(n,row+1,column,minefield);
         }
-        System.out.print("x ");
+        if (minefield[row][column]==-1){
+            System.out.print("x ");
+        }else {
 
-        return printX(n,row-1,column);
+            System.out.print(minefield[row][column] + " ");
+        }
+        return printField(n,row,column+1, minefield);
     }
 }
 
