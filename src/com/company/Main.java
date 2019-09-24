@@ -15,6 +15,8 @@ public class Main {
         int marker = bomb;
         int win = 0;
         int[][] minefield = new int[row + 2][column + 2];
+        int[][] xField = new int[row + 2][column + 2];
+
         int[][] bombCoordinates = new int[bomb][2];
         int[][] choiceCoordinates = new int[bomb][2];
         int n = 0;
@@ -135,7 +137,7 @@ public class Main {
 
     public static int[][] checkBomb(int n,int row, int column, int bomb, int marker, int[][] minefield, int[][] bombCoordinates, int[][] choiceCoordinates) {
 
-int [][] printArray = new int[3][3];
+int [][] printArray = new int[row +2][column + 2];
 
         Scanner scanner = new Scanner(System.in);
         System.out.println();
@@ -149,29 +151,29 @@ int [][] printArray = new int[3][3];
 
         //figure out recursion for this
 
-            printArray[n][i] = minefield[rowChoice - 1][columnChoice - 1];
-            i+=1;
-            printArray[n][i] =minefield[rowChoice-1][columnChoice];
-            i+=1;
-            printArray[n][i] =minefield[rowChoice - 1][columnChoice + 1];
-            i=0;
-            n+=1;
+            printArray[rowChoice - 1][columnChoice - 1] = minefield[rowChoice - 1][columnChoice - 1];
 
-            printArray[n][i] =minefield[rowChoice][columnChoice - 1];
-            i+=1;
-            printArray[n][i] =minefield[rowChoice][columnChoice];
-            i+=1;
-            printArray[n][i] =minefield[rowChoice][columnChoice + 1];
-            i=0;
-            n+=1;
+            printArray[rowChoice-1][columnChoice] =minefield[rowChoice-1][columnChoice];
 
-            printArray[n][i] =minefield[rowChoice + 1][columnChoice-1];
-            i+=1;
-            printArray[n][i] =minefield[rowChoice + 1][columnChoice];
-            i+=1;
-            printArray[n][i] =minefield[rowChoice + 1][columnChoice+ 1];
-            i=0;
+            printArray[rowChoice - 1][columnChoice + 1] =minefield[rowChoice - 1][columnChoice + 1];
 
+
+
+            printArray[rowChoice][columnChoice - 1] =minefield[rowChoice][columnChoice - 1];
+
+            printArray[rowChoice][columnChoice] =minefield[rowChoice][columnChoice];
+
+            printArray[rowChoice][columnChoice + 1] =minefield[rowChoice][columnChoice + 1];
+
+
+
+            printArray[rowChoice + 1][columnChoice-1] =minefield[rowChoice + 1][columnChoice-1];
+
+            printArray[rowChoice + 1][columnChoice] =minefield[rowChoice + 1][columnChoice];
+
+            printArray[rowChoice + 1][columnChoice+ 1] =minefield[rowChoice + 1][columnChoice+ 1];
+
+        printField(1,1, 1, printArray);
 
 
 // print the 6 around the position and print them,
@@ -192,19 +194,19 @@ int [][] printArray = new int[3][3];
 //        }
 
 
-        for (int j = 0; j <= printArray.length-1; j++) {
-
-            for (int k = 0; k <= printArray.length-1; k++) {
-                if (printArray[j][k] != -1) {
-                    System.out.print(printArray[j][k] + " ");
-                } else {
-                    System.out.print("x" + " ");
-                }
-            }
-                System.out.println();
-
-
-        }
+//        for (int j = 0; j <= printArray.length-1; j++) {
+//
+//            for (int k = 0; k <= printArray.length-1; k++) {
+//                if (printArray[j][k] != -1) {
+//                    System.out.print(printArray[j][k] + " ");
+//                } else {
+//                    System.out.print("x" + " ");
+//                }
+//            }
+//                System.out.println();
+//
+//
+//        }
 
 
         System.out.println("Would you like to put a marker down?");
@@ -277,7 +279,7 @@ public static int printX(int n, int row, int column){
             column =n;
             return printField(n,row+1,column,minefield);
         }
-        if (minefield[row][column]==-1){
+        if (minefield[row][column]==-1||minefield[row][column]==0){
             System.out.print("x ");
         }else {
 
