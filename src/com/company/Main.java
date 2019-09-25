@@ -42,6 +42,8 @@ public class Main {
        }
         if(win == bomb){
             System.out.println("win");
+        }else{
+            System.out.println("lose");
         }
     }
 
@@ -125,91 +127,58 @@ public class Main {
 
 
         Scanner scanner = new Scanner(System.in);
+        int rowChoice;
+        int columnChoice;
+
+        System.out.println("\nWould you like to:\n1. Pick a coordinate\n2. Put a marker down");
+        String YorN = scanner.nextLine();
+
+
+        if (YorN.equals("1")) {
+
         System.out.println();
         System.out.println("Enter row between 1 and " + row);
-        int rowChoice = scanner.nextInt();
-        System.out.println("Enter column between 1 and " + row);
-        int columnChoice = scanner.nextInt();
+        rowChoice = scanner.nextInt();
+        System.out.println("Enter column between 1 and " + column);
+        columnChoice = scanner.nextInt();
 
-        //if row and column != -1 add them to an array, print the array anything not in the array print x, else boom--------------------------------------------------------------------------------------
+        if(minefield[rowChoice][columnChoice]==-1){
+            System.out.println("boom!");
+            System.exit(-1);
+        }
 
 
         //figure out recursion for this
 
             printArray[rowChoice - 1][columnChoice - 1] = minefield[rowChoice - 1][columnChoice - 1];
-
             printArray[rowChoice-1][columnChoice] =minefield[rowChoice-1][columnChoice];
-
             printArray[rowChoice - 1][columnChoice + 1] =minefield[rowChoice - 1][columnChoice + 1];
 
-
-
             printArray[rowChoice][columnChoice - 1] =minefield[rowChoice][columnChoice - 1];
-
             printArray[rowChoice][columnChoice] =minefield[rowChoice][columnChoice];
-
             printArray[rowChoice][columnChoice + 1] =minefield[rowChoice][columnChoice + 1];
 
-
-
             printArray[rowChoice + 1][columnChoice-1] =minefield[rowChoice + 1][columnChoice-1];
-
             printArray[rowChoice + 1][columnChoice] =minefield[rowChoice + 1][columnChoice];
-
             printArray[rowChoice + 1][columnChoice+ 1] =minefield[rowChoice + 1][columnChoice+ 1];
 
         xField = printField(1,size,1, 1, printArray);
 
 
-// print the 6 around the position and print them,
-        //if bomb picked boom
-//        if(minefield[rowChoice][columnChoice]==-1){
-//            System.out.println("Boom!");
-//            System.out.println("Restart? Y or N");
-//            scanner.nextLine();
-//            String YorN =scanner.nextLine().toLowerCase();
-//
-//            if(YorN.equals("y")){
-//                //figure out how to restart
-//            size();
-//            }else{
-//                System.exit(0);
-//            }
-//
-//        }
-
-
-//        for (int j = 0; j <= printArray.length-1; j++) {
-//
-//            for (int k = 0; k <= printArray.length-1; k++) {
-//                if (printArray[j][k] != -1) {
-//                    System.out.print(printArray[j][k] + " ");
-//                } else {
-//                    System.out.print("x" + " ");
-//                }
-//            }
-//                System.out.println();
-//
-//
-//        }
-
-
-        System.out.println("Would you like to put a marker down?");
-        scanner.nextLine();
-        System.out.println("Y or N");
-        String YorN = scanner.nextLine().toLowerCase();
-
-
-        if (YorN.equals("n")) {
              checkBomb(n,size,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates,xField,printArray);
 
-        } else if (YorN.equals("y")||YorN.equals("n") && minefield[rowChoice][columnChoice] != -1) {
+        } else if (YorN.equals("2")) {
+
+            System.out.println("Pick row between 1 and " + row);
+            rowChoice = scanner.nextInt();
+            System.out.println("Pick column between 1 and " + column);
+            columnChoice = scanner.nextInt();
 
             compareCoordinates(n,size, row,  column,  bomb, marker,minefield, bombCoordinates,choiceCoordinates,  rowChoice,  columnChoice, xField,printArray);//rename
 
 
-        } else {
-            System.out.println(minefield[rowChoice][columnChoice]);
+        } else if (YorN.equals("")){
+
             checkBomb(n,size,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates,xField,printArray);
         }
         return choiceCoordinates;
