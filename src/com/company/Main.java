@@ -130,6 +130,8 @@ public class Main {
         int rowChoice;
         int columnChoice;
 
+
+
         System.out.println("\nWould you like to:\n1. Pick a coordinate\n2. Put a marker down");
         String YorN = scanner.nextLine();
 
