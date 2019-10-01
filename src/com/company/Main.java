@@ -22,15 +22,15 @@ public class Main {
         int [][] printArray = new int[row +2][column + 2];
         int n = 0;
 
-
-
-
         minefield = placeMines(n, row, column, bomb, minefield, bombCoordinates);
+
         printX(row,row, column);
-        printField(1,size,1, 1, minefield);
+
+      printField(1,size,1, 1, minefield);
 
         checkBomb(n,size,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates,xField, printArray);
 
+        //change to recursion
        for (int j=0;j<bombCoordinates.length;j++){
            for(int k=0;k<bombCoordinates.length;k++){
 
@@ -40,6 +40,7 @@ public class Main {
                }
            }
        }
+
         if(win == bomb){
             System.out.println("win");
         }else{
@@ -47,7 +48,7 @@ public class Main {
         }
     }
 
-    public static int[] size(){
+    private static int[] size(){
         int fieldSize[] = new int[3];
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter how many rows: ");
@@ -61,7 +62,7 @@ public class Main {
 
     }
 
-    public static int[][] placeMines(int n, int row, int column, int bomb, int[][] field, int[][] bombCoordinates) {
+    private static int[][] placeMines(int n, int row, int column, int bomb, int[][] field, int[][] bombCoordinates) {
 
 
         Random rnd = new Random();
@@ -122,7 +123,7 @@ public class Main {
         return placeMines(n, row, column, (bomb - 1), field, bombCoordinates);
     }
 
-    public static int[][] checkBomb(int n,int size, int row, int column, int bomb, int marker, int[][] minefield, int[][] bombCoordinates, int[][] choiceCoordinates,int[][] xField, int [][] printArray) {
+    private static void checkBomb(int n, int size, int row, int column, int bomb, int marker, int[][] minefield, int[][] bombCoordinates, int[][] choiceCoordinates, int[][] xField, int[][] printArray) {
 
 
 
@@ -133,63 +134,71 @@ public class Main {
 
 
         System.out.println("\nWould you like to:\n1. Pick a coordinate\n2. Put a marker down");
-        String YorN = scanner.nextLine();
+        int YorN = Integer.parseInt(scanner.nextLine());
 
 
-        if (YorN.equals("1")) {
+        switch(YorN) {
 
-        System.out.println();
-        System.out.println("Enter row between 1 and " + row);
-        rowChoice = scanner.nextInt();
-        System.out.println("Enter column between 1 and " + column);
-        columnChoice = scanner.nextInt();
+            case 1: {
 
-        if(minefield[rowChoice][columnChoice]==-1){
-            System.out.println("boom!");
-            System.exit(-1);
+                System.out.println();
+                System.out.println("Enter row between 1 and " + row);
+                rowChoice = scanner.nextInt();
+                System.out.println("Enter column between 1 and " + column);
+                columnChoice = scanner.nextInt();
+
+                if (minefield[rowChoice][columnChoice] == -1) {
+                    System.out.println("boom!");
+                    System.exit(-1);
+                }
+
+
+                //figure out recursion instead of this
+
+                printArray[rowChoice - 1][columnChoice - 1] = minefield[rowChoice - 1][columnChoice - 1];
+                printArray[rowChoice - 1][columnChoice] = minefield[rowChoice - 1][columnChoice];
+                printArray[rowChoice - 1][columnChoice + 1] = minefield[rowChoice - 1][columnChoice + 1];
+
+                printArray[rowChoice][columnChoice - 1] = minefield[rowChoice][columnChoice - 1];
+                printArray[rowChoice][columnChoice] = minefield[rowChoice][columnChoice];
+                printArray[rowChoice][columnChoice + 1] = minefield[rowChoice][columnChoice + 1];
+
+                printArray[rowChoice + 1][columnChoice - 1] = minefield[rowChoice + 1][columnChoice - 1];
+                printArray[rowChoice + 1][columnChoice] = minefield[rowChoice + 1][columnChoice];
+                printArray[rowChoice + 1][columnChoice + 1] = minefield[rowChoice + 1][columnChoice + 1];
+
+                xField = printField(1, size, 1, 1, printArray);
+
+
+                checkBomb(n, size, row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates, xField, printArray);
+                break;
+            }
+
+            case 2:
+                System.out.println("Pick row between 1 and " + row);
+                rowChoice = scanner.nextInt();
+                System.out.println("Pick column between 1 and " + column);
+                columnChoice = scanner.nextInt();
+
+                compareCoordinates(n, size, row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates, rowChoice, columnChoice, xField, printArray);//rename
+                break;
+
+
+
+        default:{
+            System.out.println("invalid choice pick again");
+                checkBomb(n, size, row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates, xField, printArray);
+
+            }
+
         }
 
-
-        //figure out recursion for this
-
-            printArray[rowChoice - 1][columnChoice - 1] = minefield[rowChoice - 1][columnChoice - 1];
-            printArray[rowChoice-1][columnChoice] =minefield[rowChoice-1][columnChoice];
-            printArray[rowChoice - 1][columnChoice + 1] =minefield[rowChoice - 1][columnChoice + 1];
-
-            printArray[rowChoice][columnChoice - 1] =minefield[rowChoice][columnChoice - 1];
-            printArray[rowChoice][columnChoice] =minefield[rowChoice][columnChoice];
-            printArray[rowChoice][columnChoice + 1] =minefield[rowChoice][columnChoice + 1];
-
-            printArray[rowChoice + 1][columnChoice-1] =minefield[rowChoice + 1][columnChoice-1];
-            printArray[rowChoice + 1][columnChoice] =minefield[rowChoice + 1][columnChoice];
-            printArray[rowChoice + 1][columnChoice+ 1] =minefield[rowChoice + 1][columnChoice+ 1];
-
-        xField = printField(1,size,1, 1, printArray);
-
-
-             checkBomb(n,size,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates,xField,printArray);
-
-        } else if (YorN.equals("2")) {
-
-            System.out.println("Pick row between 1 and " + row);
-            rowChoice = scanner.nextInt();
-            System.out.println("Pick column between 1 and " + column);
-            columnChoice = scanner.nextInt();
-
-            compareCoordinates(n,size, row,  column,  bomb, marker,minefield, bombCoordinates,choiceCoordinates,  rowChoice,  columnChoice, xField,printArray);//rename
-
-
-        } else if (YorN.equals("")){
-
-            checkBomb(n,size,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates,xField,printArray);
-        }
-        return choiceCoordinates;
     }
 
-    public static int[][] compareCoordinates(int n,int size,int row, int column, int bomb,int marker,int[][] minefield, int[][] bombCoordinates, int[][] choiceCoordinates, int rowChoice, int columnChoice, int [][]xField,int [][] printArray) {
+    private static void compareCoordinates(int n, int size, int row, int column, int bomb, int marker, int[][] minefield, int[][] bombCoordinates, int[][] choiceCoordinates, int rowChoice, int columnChoice, int[][] xField, int[][] printArray) {
 
 
-        marker -= 1;
+             marker -= 1;
 
                     int a = 0;
                     int b = 1;
@@ -201,13 +210,13 @@ public class Main {
                 checkBomb(n,size,row, column, bomb, marker, minefield, bombCoordinates, choiceCoordinates,xField,printArray);
             }
 
-        return choiceCoordinates;
+
     }
 
 
 
 
-public static int printX(int n, int row, int column){
+private static int printX(int n, int row, int column){
 
     if (column ==0){
         System.out.println();
@@ -225,7 +234,7 @@ public static int printX(int n, int row, int column){
 }
 
 
-public static int[][] printField(int n,int size, int row, int column, int[][] minefield){
+private static int[][] printField(int n, int size, int row, int column, int[][] minefield){
 
         if (row ==size+1){
             return minefield;
